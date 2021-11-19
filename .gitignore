@@ -1,0 +1,46 @@
+# Miscellaneous
+/museum_app/*.class
+/museum_app/*.log
+/museum_app/*.pyc
+/museum_app/*.swp
+/museum_app/.DS_Store
+/museum_app/.atom/
+/museum_app/.buildlog/
+/museum_app/.history
+/museum_app/.svn/
+
+# IntelliJ related
+/museum_app/*.iml
+/museum_app/*.ipr
+/museum_app/*.iws
+/museum_app/.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#/museum_app/.vscode/
+
+# Flutter/Dart/Pub related
+**/museum_app/doc/api/
+**/museum_app/ios/Flutter/.last_build_id
+/museum_app/.dart_tool/
+/museum_app/.flutter-plugins
+/museum_app/.flutter-plugins-dependencies
+/museum_app/.packages
+/museum_app/.pub-cache/
+/museum_app/.pub/
+/museum_app/build/
+
+# Web related
+/museum_app/lib/generated_plugin_registrant.dart
+
+# Symbolication related
+/museum_app/app.*.symbols
+
+# Obfuscation related
+/museum_app/app.*.map.json
+
+# Android Studio will place build artifacts here
+/museum_app/android/app/debug
+/museum_app/android/app/profile
+/museum_app/android/app/release
