@@ -27,6 +27,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  shared_preferences: ^2.0.8
+  intl_phone_field: ^2.1.0
+  qr_code_scanner: ^0.6.1
+  qr_flutter: ^4.0.0
   flutter:
     sdk: flutter
 
@@ -57,6 +61,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+
+  assets:
+    - assets/images/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
