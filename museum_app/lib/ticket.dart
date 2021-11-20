@@ -10,6 +10,7 @@ class Ticket extends StatefulWidget {
 }
 
 class _TicketState extends State<Ticket> {
+  int ticketBought = 0;
   late Future<bool> haveQr;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -37,6 +38,124 @@ class _TicketState extends State<Ticket> {
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic))));
 
+    Container museumEstrada = Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15), color: Colors.grey[400]),
+        height: 100,
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          const Text("Билет в музей эстрады",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Text("Цена: 1800₽",
+                style: TextStyle(
+                    color: Colors.primaries[0],
+                    fontSize: 17,
+                    fontStyle: FontStyle.italic)),
+            ElevatedButton(
+                onPressed: () {
+                  _prefs.then((prefs) => prefs.setInt("ticketValue", 1));
+                  setState(() {
+                    ticketBought = 1;
+                  });
+                },
+                child: const Text("Купить"))
+          ])
+        ]));
+
+    Container museumDolls = Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15), color: Colors.grey[400]),
+        height: 100,
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          const Text("Билет на выставку кукол",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Text("Цена: 1500₽",
+                style: TextStyle(
+                    color: Colors.primaries[0],
+                    fontSize: 17,
+                    fontStyle: FontStyle.italic)),
+            ElevatedButton(
+                onPressed: () {
+                  _prefs.then((prefs) => prefs.setInt("ticketValue", 1));
+                  setState(() {
+                    ticketBought = 2;
+                  });
+                },
+                child: const Text("Купить"))
+          ])
+        ]));
+
+    if (ticketBought == 1) {
+      museumEstrada = Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15), color: Colors.grey[400]),
+          height: 100,
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Text("Билет в музей мамонтов",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text("Цена: 1800₽",
+                          style: TextStyle(
+                              color: Colors.primaries[0],
+                              fontSize: 17,
+                              fontStyle: FontStyle.italic)),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.grey[800]),
+                          onPressed: () {},
+                          child: const Text("Приобретено"))
+                    ])
+              ]));
+    } else if (ticketBought == 2) {
+      museumDolls = Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15), color: Colors.grey[400]),
+          height: 100,
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Text("Билет на выставку кукол",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text("Цена: 1500₽",
+                          style: TextStyle(
+                              color: Colors.primaries[0],
+                              fontSize: 17,
+                              fontStyle: FontStyle.italic)),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.grey[800]),
+                          onPressed: () {},
+                          child: const Text("Приобретено"))
+                    ])
+              ]));
+    }
+
     var yesQr = ListView(
       children: [
         Container(
@@ -47,58 +166,8 @@ class _TicketState extends State<Ticket> {
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic)))),
-        Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.grey[400]),
-            height: 100,
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Text("Купить билет в музей эстрады",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("Цена: 1800₽",
-                            style: TextStyle(
-                                color: Colors.primaries[0],
-                                fontSize: 17,
-                                fontStyle: FontStyle.italic)),
-                        ElevatedButton(
-                            onPressed: () {}, child: const Text("Купить"))
-                      ])
-                ])),
-        Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.grey[400]),
-            height: 100,
-            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const Text("Купить билет на выставку кукол",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text("Цена: 1500₽",
-                            style: TextStyle(
-                                color: Colors.primaries[0],
-                                fontSize: 17,
-                                fontStyle: FontStyle.italic)),
-                        ElevatedButton(
-                            onPressed: () {}, child: const Text("Купить"))
-                      ])
-                ]))
+        museumEstrada,
+        museumDolls
       ],
     );
 

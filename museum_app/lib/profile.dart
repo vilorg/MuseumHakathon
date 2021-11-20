@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:museum_app/scan_qr.dart';
+import 'package:museum_app/scan_qr_checker.dart';
+import 'package:museum_app/show_qr.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
@@ -15,7 +17,7 @@ class _ProfileState extends State<Profile> {
   String qr = "";
   bool haveQr = false;
 
-  String ticketId = "";
+  int ticketId = 0;
   bool haveTicket = false;
 
   @override
@@ -23,12 +25,11 @@ class _ProfileState extends State<Profile> {
     super.initState();
     _prefs.then((prefs) {
       String? valueQr = prefs.getString("qrValue");
-      String? valueTicket = prefs.getString("ticketValue");
+      int? valueTicket = prefs.getInt("ticketValue");
 
       if (valueTicket != null) {
         setState(() {
           ticketId = valueTicket;
-          haveTicket = true;
           haveTicket = true;
         });
       }
@@ -74,18 +75,65 @@ class _ProfileState extends State<Profile> {
         style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic)),
   );
 
-  var personalData = Container(
+  var checkerGeneral = Container(
+    padding: const EdgeInsets.all(10),
+    margin: const EdgeInsets.only(top: 30),
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10), color: Colors.grey[300]),
+    child: const Text("Занять роль проверяющего:",
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic)),
+  );
+
+  var personalDataDmitry = Container(
     padding: const EdgeInsets.symmetric(horizontal: 20),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: const [
         CircleAvatar(
-          radius: 30,
+          radius: 50,
           backgroundImage: AssetImage("assets/images/avatar.png"),
         ),
         SizedBox(width: 30),
         Text(
           "Dmitry Petrov",
+          style: TextStyle(fontSize: 23),
+        )
+      ],
+    ),
+  );
+
+  var personalDataTimofey = Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: const [
+        CircleAvatar(
+          radius: 50,
+          backgroundImage: AssetImage("assets/images/avatar_tima.png"),
+        ),
+        SizedBox(width: 60),
+        SizedBox(
+            width: 100,
+            child: Text(
+              "Timofey Reznikov",
+              style: TextStyle(fontSize: 23),
+            ))
+      ],
+    ),
+  );
+
+  var personalEmptyData = Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: const [
+        CircleAvatar(
+          radius: 50,
+        ),
+        SizedBox(width: 30),
+        Text(
+          "Пользователь",
           style: TextStyle(fontSize: 20),
         )
       ],
@@ -94,6 +142,17 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    var personalData = personalEmptyData;
+    if (qr == "8453719724") {
+      setState(() {
+        personalData = personalDataDmitry;
+      });
+    } else if (qr == "3718497765") {
+      setState(() {
+        personalData = personalDataTimofey;
+      });
+    }
+
     List<Widget> haveQrData = [
       SizedBox(
         width: 130,
@@ -121,7 +180,6 @@ class _ProfileState extends State<Profile> {
             ElevatedButton(
                 child: const Text("Тык"),
                 onPressed: () {
-                  Navigator.pop(context);
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -182,9 +240,16 @@ class _ProfileState extends State<Profile> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: (haveTicket ? haveTicketData : notTicketData)),
+            const SizedBox(height: 30),
             (haveTicket
                 ? ElevatedButton(
-                    onPressed: () {}, child: const Text("Получить qr билета"))
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ShowQr()));
+                    },
+                    child: const Text("Получить qr билета"))
                 : ElevatedButton(
                     onPressed: () {},
                     child: const Text("Получить qr билета"),
@@ -204,7 +269,16 @@ class _ProfileState extends State<Profile> {
             const SizedBox(height: 10),
             qrData,
             ticketGeneral,
-            ticketData
+            ticketData,
+            checkerGeneral,
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const CheckerQRView()));
+                },
+                child: const Text("Тык"))
           ])),
     );
   }
