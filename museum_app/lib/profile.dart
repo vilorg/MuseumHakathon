@@ -42,6 +42,8 @@ class _ProfileState extends State<Profile> {
     });
   }
 
+  late String result;
+
   var general = Container(
     margin: const EdgeInsets.only(bottom: 10),
     padding: const EdgeInsets.all(10),
@@ -118,8 +120,13 @@ class _ProfileState extends State<Profile> {
             const SizedBox(height: 10),
             ElevatedButton(
                 child: const Text("Тык"),
-                onPressed: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const MyQRView())))
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyQRView()));
+                })
           ]))
     ];
 
@@ -139,8 +146,13 @@ class _ProfileState extends State<Profile> {
             const SizedBox(height: 10),
             ElevatedButton(
                 child: const Text("Тык"),
-                onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const MyQRView())))
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyQRView()));
+                })
           ]))
     ];
 

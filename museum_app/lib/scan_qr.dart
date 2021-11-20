@@ -20,7 +20,6 @@ class _MyQRViewState extends State<MyQRView> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
-
   @override
   void reassemble() {
     super.reassemble();
@@ -32,10 +31,13 @@ class _MyQRViewState extends State<MyQRView> {
 
   @override
   Widget build(BuildContext context) {
-    if (result!=null){
+    if (result != null) {
       _prefs.then((prefs) => prefs.setString("qrValue", result!.code!));
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const MainPage()));
+      Navigator.pop(context);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const MainPage()));
     }
 
     return Scaffold(
@@ -78,7 +80,7 @@ class _MyQRViewState extends State<MyQRView> {
           borderRadius: 10,
           borderLength: 30,
           borderWidth: 10,
-          cutOutSize: MediaQuery.of(context).size.width*0.7),
+          cutOutSize: MediaQuery.of(context).size.width * 0.7),
       onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
   }
@@ -101,11 +103,5 @@ class _MyQRViewState extends State<MyQRView> {
         const SnackBar(content: Text('no Permission')),
       );
     }
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 }

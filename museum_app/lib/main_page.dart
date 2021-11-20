@@ -21,10 +21,7 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  List classes = [
-    const Ticket(),
-    const Profile()
-  ];
+  List classes = [const Ticket(), const Profile()];
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +29,8 @@ class _MainPageState extends State<MainPage> {
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
             icon: Icon(Icons.card_giftcard), label: "Купить билеты"),
-        BottomNavigationBarItem(icon: Icon(Icons.emoji_people), label: "Профиль"),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.emoji_people), label: "Профиль"),
       ],
       selectedItemColor: Colors.primaries[0],
       unselectedItemColor: Colors.primaries[0].withOpacity(0.2),
@@ -46,9 +44,9 @@ class _MainPageState extends State<MainPage> {
 
     return SafeArea(
         child: Scaffold(
-          body: classes[_selectedIndex],
-          bottomNavigationBar: menu,
-        ));
+      body: classes[_selectedIndex],
+      bottomNavigationBar: menu,
+    ));
   }
 }
 
@@ -59,13 +57,13 @@ class Cleaners extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(children: [
-          Icon(Icons.favorite, size: 50, color: Colors.grey.shade600),
-          const SizedBox(height: 20),
-          Text(
-            "Здесь будут клинеры, которые вам понравятся",
-            style: TextStyle(fontSize: 17, color: Colors.grey.shade600),
-          )
-        ]));
+      Icon(Icons.favorite, size: 50, color: Colors.grey.shade600),
+      const SizedBox(height: 20),
+      Text(
+        "Здесь будут клинеры, которые вам понравятся",
+        style: TextStyle(fontSize: 17, color: Colors.grey.shade600),
+      )
+    ]));
   }
 }
 

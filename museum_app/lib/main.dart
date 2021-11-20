@@ -34,43 +34,40 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  bool _isRegister=true;
+  late Future<bool> _isRegister;
 
   @override
   void initState() {
     super.initState();
-    _prefs.then((SharedPreferences prefs) {
+    _isRegister = _prefs.then((SharedPreferences prefs) {
       bool key = (prefs.getBool("isRegister") ?? true);
       if (key) {
         prefs.setBool("isRegister", false);
+        return true;
       }
-      setState(() {
-        _isRegister = key;
-      });
-
+      return false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // return FutureBuilder<bool>(
-    //   future: _isRegister,
-    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-    //     switch (snapshot.connectionState) {
-    //       case ConnectionState.none:
-    //       case ConnectionState.waiting:
-    //         return const CircularProgressIndicator();
-    //       default:
-    //         if (snapshot.hasError) {
-    //           return Center(child: Text('Error: ${snapshot.error}'));
-    //         } else {
-    if (_isRegister) {
-      return const Login();
-    }
-    return const MainPage();
-    //         }
-    //     }
-    //   }
-    // );
+    return FutureBuilder<bool>(
+        future: _isRegister,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return const CircularProgressIndicator();
+            default:
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                if (snapshot.data) {
+                  return const Login();
+                }
+                return const MainPage();
+              }
+          }
+        });
   }
 }
